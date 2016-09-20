@@ -13,7 +13,7 @@ app_name='stories'
 def index(request):
     object_list = Book.objects.filter(draft=False)
     object_list_2 = Book.objects.filter(draft=True)
-    objects_list_comments = Comment.objects.all()[:15]
+    objects_list_comments = Comment.objects.all()[:12]
     paginator = Paginator(object_list, 7)
 
     all_books = Book.objects.all()
