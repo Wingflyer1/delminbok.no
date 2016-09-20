@@ -15,93 +15,77 @@
 {% block body %}
 
 {% if object_list %}
-<div class="row">
-    <div class="col-sm-6 col-sm-offset-1 col-xs-10 col-xs-offset-1">
-        <div class="panel panel-default">
-            <!-- Default panel contents -->
-            <div class="panel-heading">Biblioteket
-            </div>
-            <div class="panel-body">
+<div class="container-fluid">
+    <div class="row">
+        {% block col %}
+        <div class="col-sm-6 col-sm-offset-1 col-xs-10 col-xs-offset-1">
+        {% endblock col %}
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">Biblioteket
+                </div>
+                <div class="panel-body">
 
-                {% if user.is_authenticated %}
-                    <h4>Hei {{ request.user }}</h4>
-                    <p>Det er finnes nå <strong>{{ all_books|length }}</strong> bøker <small>({{ object_list_2|length }} kladd)</small>, som er lest <strong>{{ tot_readings }}</strong> ganger.</p>
-                {% else %}
-                    <p>Hei og velkommen til delMinBok. Her kan du kose deg med bøker andre har skrevet.</p> 
-                    <p>Eller du kan bli forfatter selv og skrive din helt egen bok.</p>
-                    <p>Det er finnes nå <strong>{{ all_books|length }}</strong> bøker <small>({{ object_list_2|length}} kladd)</small>, som er lest <strong>{{ tot_readings }}</strong> ganger.</p>
-                {% endif %}
-                    {% if not user.is_authenticated%}
-                    <p><a href="{% url 'accounts:login' %}">Logg inn</a> først så du får tilgang til alt. </p>
+                    {% if user.is_authenticated %}
+                        <h4>Hei {{ request.user }}</h4>
+                        <p>Det er finnes nå <strong>{{ all_books|length }}</strong> bøker <small>({{ object_list_2|length }} kladd)</small>, som er lest <strong>{{ tot_readings }}</strong> ganger.</p>
+                    {% else %}
+                        <p>Hei og velkommen til delMinBok. Her kan du kose deg med bøker andre har skrevet.</p>
+                        <p>Eller du kan bli forfatter selv og skrive din helt egen bok.</p>
+                        <p>Det er finnes nå <strong>{{ all_books|length }}</strong> bøker <small>({{ object_list_2|length}} kladd)</small>, som er lest <strong>{{ tot_readings }}</strong> ganger.</p>
                     {% endif %}
+                        {% if not user.is_authenticated%}
+                        <p><a href="{% url 'accounts:login' %}">Logg inn</a> først så du får tilgang til alt. </p>
+                        {% endif %}
+                </div>
+
+
+                <table class="table table-striped table-inverse">
+                    <thead>
+                        <tr>
+                            <th>Cover</th>
+                            <th>Boktittel</th>
+                            <th>Terningkast</th>
+                            <th>Lest</th>
+                            <th>Forfatter</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for book in object_list %}
+                            <tr>
+                                <th scope="row"><a href="{% url 'stories:detail_book' book.id %}">
+                                <!-- <img id="foo" src="{{book.cover_picture}}" onerror="standby()" style="height:80px;width:80px;"> -->
+                                <img class="img" src="{{book.cover_picture}}" style="max-height:80px;max-width:80px;"/></a></th>
+                                <td><a href="{% url 'stories:detail_book' book.id %}">{{book.title}}</a></td>
+                                <td> {{ book.dice_result }}</td>
+                                <td>{% if book.readings > 1%} {{ book.readings }} lesinger {% elif book.readings == 0 %} Ny og ulest {% else %} {{ book.readings }} lesing {% endif %}</td>
+                                <td><small><a href="{% url 'stories:detail_author' book.author.id %}">{{book.author|truncatechars:11}} </a></small></td>
+                            </tr>
+                        {% endfor %}
+                            <tr>
+                                <th></th>
+                                <th colspan="2" style="text-align:center">
+                                    {% include 'pagination.html' %}
+
+                                <th></th>
+                            </tr>
+                    </tbody>
+                </table>
             </div>
-
-
-            <table class="table table-striped table-inverse">
-                <thead>
-                    <tr>
-                        <th>Cover</th>
-                        <th>Boktittel</th>
-                        <th>Lest</th>                    
-                        <th>Forfatter</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {% for book in object_list %}
-                        <tr>
-                            <th scope="row"><a href="{% url 'stories:detail_book' book.id %}">
-                            <!-- <img id="foo" src="{{book.cover_picture}}" onerror="standby()" style="height:80px;width:80px;"> -->
-                            <img class="img" src="{{book.cover_picture}}" style="max-height:80px;max-width:80px;"/></a></th>
-                            <td><a href="{% url 'stories:detail_book' book.id %}">{{book.title}}</a></td>
-                            <td>{% if book.readings > 1%} {{ book.readings }} lesinger {% elif book.readings == 0 %} Ny og ulest {% else %} {{ book.readings }} lesing {% endif %}</td>
-                            <td><small><a href="{% url 'stories:detail_author' book.author.id %}">{{book.author|truncatechars:11}} </a></small></td>
-                        </tr>
-                    {% endfor %}
-                        <tr>
-                            <th></th>
-                            <th colspan="2" style="text-align:center">
-                                {% include 'pagination.html' %}
-                            
-                            <th></th>
-                        </tr>
-                </tbody>
-            </table>
         </div>
+            <!-- Kommentarer tabellen -->
+
+        <div class="col-sm-3 col-xs-offset-2">
+            {% include 'comments/index.html' %}
+        </div>
+
     </div>
-
-
-    <!-- HENDELSER tabellen -->
-    <!-- <div class="col-sm-2 col-sm-offset-1">
-        <div class="panel panel-default">
-            <div class="panel-heading" style="font-size:45px;">Hendelser:</div>
-            <div class="panel-body">
-            </div> -->
-
-                <!-- Tabell Panelet -->
-            
-          <!--   <table class="table table-striped">    
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Bok:</th>
-                        <th>Hva?</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>16 sep</th>
-                        <td>Tåken</td>
-                        <td>Publisert</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-        </div>
-    </div> -->
-
-    
 </div>
+
+
+
+
 {% else %}
 
     <h2>Det finnes ingen bøker i biblioteket enda.</h2>

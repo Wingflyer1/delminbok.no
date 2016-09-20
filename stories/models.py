@@ -27,6 +27,18 @@ class Book(models.Model):
         story = self.story
         return story[:180]
 
+    def dice_result(self):
+        count = 0
+        sum = 0
+        try:
+            for comment in self.comment_set.all():
+                count += 1
+                sum += int(comment.dice)
+                result = sum/float(count)
+            return result
+        except:
+            return '--'
+
     def story_to_lines(self):
         story = self.story
         lines_list = story.splitlines()
@@ -37,5 +49,3 @@ class Book(models.Model):
 
     class Meta:
         ordering = ['-published']
-
-        

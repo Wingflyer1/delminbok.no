@@ -29,13 +29,15 @@
             <th>Tittel</th>
             <th>Sjanger</th>
             <th>Lesinger (totalt: {{tot_readings}})</th>
+            <th>Terningkast</th>
             <th>Skriv videre</th>
             <th>Slett?</th>
             {% for book in object_list %}
             <tr>
             <td><a href="{% url 'stories:detail_book' book.id %}"> {{book.title}} {% if book.draft%} <small style="color:red">(Kladd)</small> {% endif %} </a></td>
             <td>{{book.genre}}</td>
-            <td>{% if book.readings > 1%} {{ book.readings }} lesinger {% elif book.readings == 0 %} Ingen lesere enda. Kanskje sende en link? {% else %} {{ book.readings }} lesing {% endif %}</td>
+            <td>{% if book.readings > 1%} {{ book.readings }} lesinger {% elif book.readings == 0 %} Ingen lesere enda.{% else %} {{ book.readings }} lesing {% endif %}</td>
+            <td>{{ book.dice_result }}</td>
             <td><a href="{% url 'stories:edit_book' book.id %}"><button class="btn btn-sm btn-success">Fortsett</button></a></td>
             <td><a href="{% url 'stories:delete_book' book.id %}"><button class="btn btn-sm btn-warning">Slett boken</button></a></td>
             </tr>

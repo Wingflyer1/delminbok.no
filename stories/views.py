@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Book
+from comments.models import Comment
 from .forms import BookCreateForm
+from comments.forms import CommentCreateForm
 
 from django.contrib.auth.models import User
 
@@ -11,6 +13,7 @@ app_name='stories'
 def index(request):
     object_list = Book.objects.filter(draft=False)
     object_list_2 = Book.objects.filter(draft=True)
+    objects_list_comments = Comment.objects.all()
     paginator = Paginator(object_list, 7)
 
     all_books = Book.objects.all()
@@ -31,6 +34,7 @@ def index(request):
                 'object_list_2':object_list_2,
                 'all_books':all_books,
                 'tot_readings':tot_readings,
+                'objects_list_comments':objects_list_comments,
                  }
 
 
@@ -50,7 +54,42 @@ def my_page(request):
 def detail_book(request, book_id):
     book = get_object_or_404(Book, pk=book_id)
     summary = book.book_summarys()
-    return render(request, 'stories/detail_book.html', {'book':book,  'summary': summary})
+    submit = 'Kast'
+    form = CommentCreateForm(request.POST or None)
+    try:
+        if Comment.objects.get(comment_writer=request.user, book=book):
+            comment = Comment.objects.get(comment_writer=request.user, book=book)
+            form = CommentCreateForm(request.POST or None, instance=comment)
+    except:
+        pass
+
+
+
+
+
+    if form.is_valid():
+        user_logged_in = request.user
+        comment = form.save(commit=False)
+        comment.comment_writer = user_logged_in
+
+        dice = form.cleaned_data.get('dice')
+        comment.dice = dice
+
+        comment.book = book
+
+        comment.save()
+
+        return redirect("/")
+
+
+    context = {
+        'book': book,
+        'summary': summary,
+        'form':form,
+        'submit':submit
+    }
+
+    return render(request, 'stories/detail_book.html', context)
 
 
 def read_book(request, book_id):
@@ -81,7 +120,7 @@ def read_book(request, book_id):
 
 def detail_author(request, author_id):
     author = get_object_or_404(User, pk=author_id)
-    books = Book.objects.filter(author=author_id, draft=False).order_by('updated')
+    books = Book.objects.filter(author=author_id, draft=False).order_by('published')
     tot_readings = 0
     for book in books:
         tot_readings += book.readings
@@ -140,10 +179,10 @@ def create_book(request):
         book.genre = genre
 
         cover_picture = form.cleaned_data.get('cover_picture')
-        print(cover_picture)
+
         if len(cover_picture) > 2:
             book.cover_picture = cover_picture
-            print('urllonger than 1')
+
         else:
             book.cover_picture = 'http://www.mcsenteret.com/images/manglerbilde.jpg'
 

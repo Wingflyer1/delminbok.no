@@ -22,8 +22,17 @@
         <p> Publisert {{ book.published|date:"d M Y" }}. <br/>Lest 
             {% if book.readings == 1 %} en gang{% else %} {{ book.readings }} ganger{% endif %}.</p>
             <a href="{% url 'stories:read_book' book.id %}"><button class="btn btn-default">Les boken</button></a>
+
         <h3  style="background-color:grey; color:white;">Slik starter den:</h3>
         <h4>{{summary}}...</h4>
+        {% if not book.author == request.user and request.user.is_authenticated %}
+        {% include 'form2.html' %}
+        {% endif %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-md-offset-1">
+
     </div>
 </div>
 

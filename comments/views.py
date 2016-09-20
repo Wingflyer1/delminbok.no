@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Comment
 
 
+
 # Create your views here.
 
 def index(request):
@@ -13,3 +14,6 @@ def index(request):
         'object_list':object_list,
     }
     return render(request, "comments/index.html", context)
+
+
+
