@@ -1,6 +1,6 @@
 
 <div class="panel panel-default">
-    <div class="panel-heading" style="font-size:45px;">Siste Terningkast:</div>
+    <div class="panel-heading" style="font-size:40px;">Siste Terningkast:</div>
     <div class="panel-body">
     </div>
 
@@ -11,14 +11,14 @@
             <tr>
                 <th>Bok:</th>
                 <th>Terningkast:</th>
-                <th>Av:</th>
+                <th>Fra:</th>
 
             </tr>
         </thead>
         <tbody>
-        {%for object in objects_list_comments %}
+        {% for object in object_list_comments %}
             <tr>
-                <td>{{ object.book|truncatechars:11 }}</td>
+                <td><a href="{% url 'stories:detail_book' object.book.id %}">{{ object.book|truncatechars:11 }}</a></td>
                 <th>{{ object.dice }}</th>
                 <td>{{ object.comment_writer }}</td>
             </tr>
