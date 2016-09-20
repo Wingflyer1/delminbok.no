@@ -1,25 +1,28 @@
-{% extends 'base.html' %}
-{% load staticfiles %}
 
-{% block style %}
-<link rel="stylesheet" type="text/css" href="{% static 'stories/css/style.css' %}" />
-{% endblock style %}
+<div class="panel panel-default">
+    <div class="panel-heading" style="font-size:45px;">Siste Terningkast:</div>
+    <div class="panel-body">
+    </div>
 
-{% block body %}
+        <!-- Tabell Panelet -->
 
-<h3 style="padding-left:10px;">Comments: </h3>
+     <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Bok:</th>
+                <th>Terningkast:</th>
+                <th>Av:</th>
 
-<table>
-    <tr>
-        <th style="padding-left:10px;">Bok</th><th style="padding-left:10px;">Kommentar</th><th style="padding-left:10px;">Kommentar fra:</th>
-    </tr>
-    {% for object in object_list %}
-    <tr>
-        <td style="padding-left:10px;">{{ object.book }}</td>
-        <td style="padding-left:10px;">{{ object.comment }}</td>
-        <td style="padding-left:10px;">{{ object.comment_writer }}</td>
-    </tr>
-    {% endfor %}
-</table>
-
-{% endblock body %}
+            </tr>
+        </thead>
+        <tbody>
+        {%for object in objects_list_comments %}
+            <tr>
+                <td>{{ object.book|truncatechars:11 }}</td>
+                <th>{{ object.dice }}</th>
+                <td>{{ object.comment_writer }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
