@@ -15,7 +15,7 @@
         <a href="{% url 'stories:read_book' book.id %}"><img src="{{book.cover_picture}}" style="max-height:300px;max-width:300px;border-radius:50px 5px;"/></a>
         <h3>
             {{book.title}} <small>({{book.genre}})</small><br/>
-            <small>skrevet av {{book.author}}</small><br/>
+            <small>skrevet av <a href="{% url 'stories:detail_author' book.author.id %}">{{book.author}}</a></small><br/>
         </h3>
     </div>
     <div class="col-sm-3 col-sm-offset-2 col-md-offset-1">

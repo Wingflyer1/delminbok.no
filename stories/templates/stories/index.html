@@ -43,11 +43,10 @@
                 <table class="table table-striped table-inverse">
                     <thead>
                         <tr>
-                            <th>Cover</th>
-                            <th>Boktittel</th>
+                            <th>Bok</th>
                             <th>Terningkast</th>
                             <th>Lest</th>
-                            <th>Forfatter</th>
+                            <!--<th>Forfatter</th>-->
                         </tr>
                     </thead>
 
@@ -56,11 +55,11 @@
                             <tr>
                                 <th scope="row"><a href="{% url 'stories:detail_book' book.id %}">
                                 <!-- <img id="foo" src="{{book.cover_picture}}" onerror="standby()" style="height:80px;width:80px;"> -->
-                                <img class="img" src="{{book.cover_picture}}" style="max-height:80px;max-width:80px;"/></a></th>
-                                <td><a href="{% url 'stories:detail_book' book.id %}">{{book.title}}</a></td>
+                                <img class="img" src="{{book.cover_picture}}" style="max-height:80px;max-width:80px;"/>
+                                {{book.title|truncatechars:35}}</a></th>
                                 <td> {{ book.dice_result }}</td>
                                 <td>{% if book.readings > 1%} {{ book.readings }} lesinger {% elif book.readings == 0 %} Ny og ulest {% else %} {{ book.readings }} lesing {% endif %}</td>
-                                <td><small><a href="{% url 'stories:detail_author' book.author.id %}">{{book.author|truncatechars:11}} </a></small></td>
+                                <!--<td><small><a href="{% url 'stories:detail_author' book.author.id %}">{{book.author|truncatechars:11}} </a></small></td>-->
                             </tr>
                         {% endfor %}
                             <tr>
