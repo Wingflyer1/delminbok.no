@@ -1,0 +1,129 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="{% static 'stories/images/fav-mb.png' %}" type="image/png" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>{% block title %}{% endblock title %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Tangerine">
+
+    {% block style %}
+    {% endblock style %}
+    <style>
+    footer {
+    position: fixed;
+    height: 100px;
+    bottom: 0;
+    width: 100%;
+    }
+    </style>
+    <!-- Latest compiled and minified JavaScript -->
+</head>
+<body data-spy="scroll" data-target="#spy-scroll-id">
+
+<nav class="navbar navbar-inverse navbar-fixed-top" style="margin-bottom:5px;">
+    <div class="container-fluid">
+        <!-- Header -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#spy-scroll-id">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'stories:index' %}">delMinBok</a>
+        </div>
+
+        <!-- Items -->
+        <div class="collapse navbar-collapse" id="spy-scroll-id">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a href="{% url 'stories:index' %}">
+                        <span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp;
+                        Bibliotek
+                    </a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="">
+                    <a href="{% url 'stories:my_page' %}">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;
+                        Min side
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+            <!-- Searchform to search titles or writers - should be part of the app -->
+<!--             <form class="navbar-form navbar-left" role="search" method="get" action="#">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="q" value="">
+                    <button type="submit" class="btn btn-defaul">Søk</button>
+                </div>
+            </form> -->
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                <li class="">
+                    <a href="{% url 'stories:create_book' %}">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;
+                        Lag ny bok
+                    </a>
+                </li>
+                {% endif %}
+                <li class="">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'accounts:logout' %}">
+                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp;
+                        Logg ut
+                    {% else %}
+                    <a href="{% url 'accounts:login' %}">
+                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp;
+                        Logg inn
+                    {% endif %}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Message-bar for all pages, comment out if not in use-->
+    <div class="container-fluid" style="background-color:red;color:white;font-weight:bold;">
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1">
+        Noen sjangre kan gi kulere effekter enn andre...
+        </div>
+    </div>
+    <!-- end of Message-bar -->
+
+</div>
+</nav>
+
+
+
+
+{% block body %}
+
+{% endblock body %}
+
+{% block footer %}
+{% if request.user.is_authenticated %}
+<div class="footer navbar-fixed-bottom" style="text-align:right"><a href="mailto:post@delminbok.no?Subject=Hei%20fra%20{{request.user}}" target="_top"><button class="btn btn-default btn-sm">
+<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;Skriv til delMinBok</button></a></div>
+
+{% endif %}
+{% endblock footer %}
+<!-- Latest compiled and minified JavaScript -->
+<!--<script src="https://ajax.goolgeapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script data-cfasync="false" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script data-cfasync="false" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+<script data-cfasync="false" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{% static 'js/base_footer.js' %}"></script>
+</body>
+</html>

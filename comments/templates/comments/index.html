@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'stories/css/style.css' %}" />
+{% endblock style %}
+
+{% block body %}
+
+<h3 style="padding-left:10px;">Comments: </h3>
+
+<table>
+    <tr>
+        <th style="padding-left:10px;">Bok</th><th style="padding-left:10px;">Kommentar</th><th style="padding-left:10px;">Kommentar fra:</th>
+    </tr>
+    {% for object in object_list %}
+    <tr>
+        <td style="padding-left:10px;">{{ object.book }}</td>
+        <td style="padding-left:10px;">{{ object.comment }}</td>
+        <td style="padding-left:10px;">{{ object.comment_writer }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock body %}

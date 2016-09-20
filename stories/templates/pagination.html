@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="pagination">
+        <span class="step-links">
+            {% if object_list.has_previous %}
+                <a href="?page={{ object_list.previous_page_number }}"><button type="button" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-chevron-left"></span></button></a>
+            {% endif %}
+
+            <span class="current">
+                {{ object_list.number }} av {{ object_list.paginator.num_pages }}
+            </span>
+
+            {% if object_list.has_next %}
+                <a href="?page={{ object_list.next_page_number }}"><button type="button" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-chevron-right"></span></button></a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+

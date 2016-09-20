@@ -1,0 +1,20 @@
+body{
+    background: grey url("../images/background.jpg");
+    padding-top: 70px;
+}
+
+.navbar{
+    border-radius:0;
+}
+
+.navbar-brand{
+    font-family: 'Tangerine', cursive;
+    font-size:40px;
+}
+
+.panel-heading{
+    font-family: 'Tangerine', cursive;
+    font-size:70px;
+    text-align:center;
+    font-weight: bold;
+}

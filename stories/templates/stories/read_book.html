@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}{{book}}{% endblock title %}
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% if book.genre == 'Horror' or book.genre == 'horror' %}{% static 'stories/css/horror.css'%}
+                                            {% elif book.genre == 'Eventyr' or book.genre == 'eventyr' %}{% static 'stories/css/eventyr.css'%}
+                                            {% elif book.genre == 'Humor' or book.genre == 'humor' %}{% static 'stories/css/humor.css'%}
+                                            {% elif book.genre == 'Sci-Fi' or book.genre == 'sci-fi' or book.genre == 'scifi' %}{% static 'stories/css/sci-fi.css'%}
+                                            {% elif book.genre == 'Spenning' or book.genre == 'Thriller' or book.genre == 'spenning' %}{% static 'stories/css/spenning.css'%}
+                                            {% else %}{% static 'stories/css/style.css'%} {% endif %}" />
+{% endblock style %}
+{% block body %}
+
+<!--     <div class="col-sm-2 col-xs-8 col-xs-offset-1">
+        <img src="{{book.cover_picture}}" style="max-height:120px;max-width:120px;border-radius:5px 5px;"/>
+        <div class="panel-heading" style="background-color:rgba(179, 179, 255, 0.2); color:white;font-size:35px; important!">Av: {{book.author}}</div>
+    </div> -->
+
+<div class="container-fluid" id="story">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+            <div  class="panel-heading" style="font-family:'Tangerine', cursive;font-weight:bold;text-align:center;background-color:rgba(179, 179, 255, 0.2); color:black;font-size:48px; important!">{{book.title}}</div>
+            <hr/>
+            {% for line in object_list %}
+                {{ line }}<br />
+            {% endfor %}
+            <div class="panel">
+                <div class="col-md-3 col-md-offset-4 col-xs-6 col-xs-offset-3">
+                    {% include 'pagination.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+            Skrevet av {{book.author}}.
+        </div>
+    </div>
+</div>
+
+{% block footer %}
+{% if request.user.id == book.author.id %}
+<div class="footer navbar-fixed-bottom" style="text-align:left"><a href="{% url 'stories:edit_book' book.id %}" target="_top"><button class="btn btn-default btn-sm">Skriv videre</button></a></div>
+{% else %}
+<div class="footer navbar-fixed-bottom" style="text-align:right"><a href="mailto:delminbok@falnes.com?Subject=Hei%20fra%20{{request.user}}" target="_top"><button class="btn btn-default btn-sm">Send oss e-post</button></a></div>
+{% endif %}
+{% endblock footer %}
+
+
+{% endblock body %}

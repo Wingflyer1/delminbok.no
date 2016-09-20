@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}Min side{% endblock title %}
+
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'stories/css/style.css'%}" />
+{% endblock style %}
+
+
+{% block body %}
+
+{% if error_message %}
+    <p><strong>{{ error_message }}</strong></p>
+{% endif %}
+{% if object_list %}
+<div class="row">
+    <div class="col-sm-7 col-sm-offset-1">
+        <div class="panel panel-default">
+              <div class="panel-heading">{{ request.user }}'s bøker</div>
+              <div class="panel-body">
+                    <p>Du har fått {% if tot_readings == 1%} <stron>1</stron> lesing hittil. {% else %} <strong>{{ tot_readings }}</strong> lesinger hittil. {% endif %}</p>
+                  <a href="{% url 'stories:create_book' %}"><button class="btn btn-default">
+<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp;Skriv ny bok</button></a>
+                  <hr/>
+               </div>
+        <table class="table">
+            <th>Tittel</th>
+            <th>Sjanger</th>
+            <th>Lesinger (totalt: {{tot_readings}})</th>
+            <th>Skriv videre</th>
+            <th>Slett?</th>
+            {% for book in object_list %}
+            <tr>
+            <td><a href="{% url 'stories:detail_book' book.id %}"> {{book.title}} {% if book.draft%} <small style="color:red">(Kladd)</small> {% endif %} </a></td>
+            <td>{{book.genre}}</td>
+            <td>{% if book.readings > 1%} {{ book.readings }} lesinger {% elif book.readings == 0 %} Ingen lesere enda. Kanskje sende en link? {% else %} {{ book.readings }} lesing {% endif %}</td>
+            <td><a href="{% url 'stories:edit_book' book.id %}"><button class="btn btn-sm btn-success">Fortsett</button></a></td>
+            <td><a href="{% url 'stories:delete_book' book.id %}"><button class="btn btn-sm btn-warning">Slett boken</button></a></td>
+            </tr>
+        {% endfor %}
+        </table>
+        </div>
+    </div>
+</div>
+
+{% else %}
+<div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+        <h3>Hei {{ request.user }}!</h3>
+        <p>Ønsker du å begynne din forfatter-karriere nå? Klikk på knappen og start med en gang.</p>
+        <a href="{% url 'stories:create_book' %}"><button class="btn btn-default">Lag min første bok</button></a>
+    </div>
+</div>
+{% endif %}
+{% endblock body %}

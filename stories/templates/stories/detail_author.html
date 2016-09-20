@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}{{ author }}'s bøker{% endblock title %}
+
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'stories/css/style.css'%}" />
+{% endblock style %}
+
+
+{% block body %}
+
+{% if error_message %}
+    <p><strong>{{ error_message }}</strong></p>
+{% endif %}
+{% if books %}
+<div class="row">
+    <div class="col-sm-5 col-sm-offset-1">
+        <!--<form action="{% url 'stories:favorite_book_by_author' author.id %}" method="post">-->
+            <!--{% csrf_token %}-->
+            <div class="panel panel-default">
+                  <!-- Default panel contents -->
+                  <div class="panel-heading" style="font-size:35px !important;">{{author}}'s bøker</div>
+                  <div class="panel-body">
+                        <p>{{author}} har publisert {{ books|length }} {% if books|length == 1 %}bok. {% else %}bøker. {% endif %}</p>
+                        <P>{% if tot_readings == 1 %}Boken er lest 1 gang {% elif books|length == 1 %} Boken er lest {{ tot_readings }} ganger. {% else %}Bøkene er lest {{ tot_readings }} ganger. {% endif %}</P>
+                      <hr/>
+                   </div>
+            <table class="table">
+                <!--<th></th>-->
+                <th>Tittel</th>
+                <th>Sjanger</th>
+                <!--<th>Favoritt</th>-->
+                {% for book in books %}
+                <tr>
+                <!--<td><input type="radio" id="book{{ forloop.counter }}" name="book" value="{{book.id}}"></td>-->
+                <!--<label for="book{{ forloop.counter }}">-->
+                <td><a href="{% url 'stories:detail_book' book.id %}"> {{book.title}}</a></td>
+                <td>{{book.genre}}</td>
+                <!--<td>-->
+                <!--{% if book.is_favorite %}-->
+                    <!--<img src="http://www.free-icons-download.net/images/small-yellow-five-pointed-star-icon-22177.png" />-->
+
+                <!--{% endif %}-->
+                <!--</td>-->
+                <!--</label>-->
+                </tr>
+
+            {% endfor %}
+            </table>
+                </div>
+            <br/>
+            <!--<input type="submit" value="Liker!">-->
+        <!--</form>-->
+    </div>
+</div>
+
+
+{% else %}
+<h3>{{author}} har ikke skrevet noe enda.</h3>
+{% endif %}
+{% endblock body %}

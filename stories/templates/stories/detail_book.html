@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}Book Detail{% endblock title %}
+
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'stories/css/style.css' %}" />
+{% endblock style %}
+
+
+{% block body %}
+<div class="row" style="margin-top:10px;">
+    <div class="col-sm-3 col-sm-offset-1">
+        <a href="{% url 'stories:read_book' book.id %}"><img src="{{book.cover_picture}}" style="max-height:300px;max-width:300px;border-radius:50px 5px;"/></a>
+        <h3>
+            {{book.title}} <small>({{book.genre}})</small><br/>
+            <small>skrevet av {{book.author}}</small><br/>
+        </h3>
+    </div>
+    <div class="col-sm-3 col-sm-offset-2 col-md-offset-1">
+        <p> Publisert {{ book.published|date:"d M Y" }}. <br/>Lest 
+            {% if book.readings == 1 %} en gang{% else %} {{ book.readings }} ganger{% endif %}.</p>
+            <a href="{% url 'stories:read_book' book.id %}"><button class="btn btn-default">Les boken</button></a>
+        <h3  style="background-color:grey; color:white;">Slik starter den:</h3>
+        <h4>{{summary}}...</h4>
+    </div>
+</div>
+
+{% endblock body %}

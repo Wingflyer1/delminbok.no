@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+
+<div class="col-sm-6 col-sm-offset-3">
+    <h1>{{ title }}</h1>
+    <hr/>
+    <form method="POST" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form|crispy}}
+    <input type = submit class="btn btn-default" value="{{ title }}" />{% if message %}
+    <a href="{% url 'accounts:register' %}">Registrer deg!</a>
+    {% endif %}
+    </form>
+
+</div>
+{% endblock body %}

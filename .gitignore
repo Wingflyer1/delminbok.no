@@ -1,0 +1,14 @@
+django_project/secret_key.py
+.idea/
+*.pyc
+*.sqlite3
+
+Uncomment these after first pull so you don't mix the dev and prod migrations/
+
+#######
+comments/migrations/
+account/migrations/
+stories/migrations/
+ 
+#######
+
