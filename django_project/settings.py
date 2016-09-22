@@ -26,21 +26,6 @@ DEBUG = secret_key.DEBUG
 
 ALLOWED_HOSTS = ['139.59.160.158', 'falnes.com','www.falnes.com', 'www.delminbok.no','delminbok.no']
 
-EMAIL_HOST = 'mail.fastname.no' #'smtp.gmail.com'
-EMAIL_HOST_USER = 'ikkesvar@delminbok.no' #'terje.falnes@gmail.com'
-EMAIL_HOST_PASSWORD = secret_key.mail_password
-EMAIL_PORT = 587 #587
-EMAIL_USE_TLS = True
-"""
-ut.mailadmin.no Port 465
-"""
-
-
-
-"""
-If using gmail, you will need to unlock Captcha to enable Django to send for you:
-https://accounts.goolg.e.com/displayunlockcapthca
-"""
 
 # Application definition
 

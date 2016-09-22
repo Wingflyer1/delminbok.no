@@ -19,7 +19,7 @@ def login_view(request):
         user = authenticate(username=username, password=password)
         login(request, user)
         # print(request.user.is_authenticated())
-        return redirect("stories:my_page")
+        return redirect("/")
     # redirect
     context = {
         'form':form,
@@ -41,7 +41,7 @@ def register_view(request):
 
         new_user = authenticate(username=user.username, password=password)
         login(request, new_user)
-        return redirect("stories:my_page")
+        return redirect("/")
 
     context = {
         'form':form,
@@ -52,4 +52,4 @@ def register_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect("accounts:login")
+    return redirect("/")

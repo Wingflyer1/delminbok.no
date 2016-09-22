@@ -18,7 +18,7 @@
 <div class="row">
     <div class="col-sm-7 col-sm-offset-1">
         <div class="panel panel-default">
-              <div class="panel-heading">Hei {{ request.user }}:</div>
+              <div class="panel-heading">{{ request.user }}'s bøker</div>
               <div class="panel-body">
                     <p>Du har fått {% if tot_readings == 1%} <stron>1</stron> lesing hittil. {% else %} <strong>{{ tot_readings }}</strong> lesinger hittil. {% endif %}</p>
                   <a href="{% url 'stories:create_book' %}"><button class="btn btn-default">
@@ -51,17 +51,8 @@
 <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
         <h3>Hei {{ request.user }}!</h3>
-        <br/>
-        <br/>
-        <p><strong>Sitter du inne med en bok-idé, men har ikke fått ned et eneste ord enda?</strong></p>
-        <p>Du er ikke førstemann :) Men gratulerer, for nå har du, sammen med de andre på delMinBok, funnet dette kreative hjørnet.</p>
-        <p>Det er bare å føle seg frem, skriv noe, et kapittel eller to, og se få tilbakemelding fra likesinnede.</p>
-        <p>Lykke til!</strong></p>
-
+        <p>Ønsker du å begynne din forfatter-karriere nå? Klikk på knappen og start med en gang.</p>
         <a href="{% url 'stories:create_book' %}"><button class="btn btn-default">Lag min første bok</button></a>
-        <br/>
-        <br/>
-        <p>Eller om du bare har lyst å utforske litt klikker du på Bibliotek oppe i menyen og kan begynne å lese.</p>
     </div>
 </div>
 {% endif %}
