@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.core.mail import send_mail, EmailMultiAlternatives
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Book
 from comments.models import Comment
 from .forms import BookCreateForm
 from comments.forms import CommentCreateForm
+from django.conf import settings
 
 from django.contrib.auth.models import User
 
@@ -56,16 +58,17 @@ def detail_book(request, book_id):
     summary = book.book_summarys()
     submit = 'Kast'
     form = CommentCreateForm(request.POST or None)
+    author = book.author
+    receiver_mail = User.objects.get(id = author.id)
+    email_receiver = receiver_mail.email
+
+
     try:
         if Comment.objects.get(comment_writer=request.user, book=book):
             comment = Comment.objects.get(comment_writer=request.user, book=book)
             form = CommentCreateForm(request.POST or None, instance=comment)
     except:
         pass
-
-
-
-
 
     if form.is_valid():
         user_logged_in = request.user
@@ -79,7 +82,29 @@ def detail_book(request, book_id):
 
         comment.save()
 
+        #Sends email to book author, when new terningkast er mottatt.
+        from_email = settings.EMAIL_HOST_USER
+        to_email = book.author.email
+
+
+        subject, from_email, to = 'delMinBok: Du har mottatt terningkast for ' + book.title, from_email, to_email
+        text_content = 'Hei ' + author.username + '\n\nBoken din <<'+ book.title +'>> har mottatt et nytt terningkast.\n\n'\
+                  + user_logged_in.username + ' har gitt boken terningkast '+ dice +', gratulerer.\n\n' \
+                                                                           'Med vennlig hilsen\n' \
+                                                                           'www.delMinBok.no'
+        html_content = '<body style="background-color:black;color:white;">' \
+                       '<H2>Hei ' + author.username + '</H2><br><br>' \
+                      '<strong style="color:aqua;">' + book.title +'</strong> har mottatt et nytt terningkast.<br><br><strong style="color:aqua;>">'\
+                      + user_logged_in.username + '</strong> har lest boken og gitt den terningkast <strong style="color:aqua;">'+ dice +'</strong>, gratulerer.<br><br>' \
+                       'Med vennlig hilsen<br><br>' \
+                       '<a style="color:yellow;" href="www.delMinBok.no">delMinBok</a></body>'
+        msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
+
+
         return redirect("/")
+
 
 
     context = {

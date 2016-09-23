@@ -1,0 +1,25 @@
+html{
+	height:100%;
+}
+
+body{
+    background: grey url("../images/eventyr.jpg");
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    min-height: 100%;
+    color:;
+    padding-top: 70px;
+}
+
+#story{
+	background-color: rgba(255, 255, 230, 0.4);
+}
+
+.navbar{
+    border-radius:0;
+}
+
+.navbar-brand{
+    font-family: 'Tangerine', cursive;
+    font-size:40px;
+}

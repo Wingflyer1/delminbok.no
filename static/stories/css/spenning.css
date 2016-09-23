@@ -1,0 +1,25 @@
+html{
+	height:100%;
+}
+
+body{
+    background: grey url("../images/spenning.jpg");
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    min-height: 100%;
+    color:white;
+    padding-top: 70px;
+}
+
+#story{
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.navbar{
+    border-radius:0;
+}
+
+.navbar-brand{
+    font-family: 'Tangerine', cursive;
+    font-size:40px;
+}
