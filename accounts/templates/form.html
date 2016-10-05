@@ -12,13 +12,14 @@
 <div class="col-sm-6 col-sm-offset-3">
     <h1>{{ title }}</h1>
     <hr/>
-    <form method="POST" action="" enctype="multipart/form-data">
+    <form method="POST" action="" enctype="multipart/form-data" style="color:black;">
         {% csrf_token %}
         {{form|crispy}}
-    <input type = submit class="btn btn-default" value="{{ title }}" />{% if message %}
-    <a href="{% url 'accounts:register' %}">Registrer deg!</a>
-    {% endif %}
+    <input type = submit class="btn btn-default" value="{{ title }}" />
     </form>
+    {% if message %}<br/><br/>
+    <a href="{% url 'accounts:register' %}"><button class="btn btn-success">Registrer deg!</button></a>
+    {% endif %}
 
 </div>
 
