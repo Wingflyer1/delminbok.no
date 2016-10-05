@@ -92,12 +92,12 @@ def detail_book(request, book_id):
                   + user_logged_in.username + ' har gitt boken terningkast '+ dice +', gratulerer.\n\n' \
                                                                            'Med vennlig hilsen\n' \
                                                                            'www.delMinBok.no'
-        html_content = '<body style="background-color:black;color:white;">' \
-                       '<H2>Hei ' + author.username + '</H2><br><br>' \
-                      '<strong style="color:aqua;">' + book.title +'</strong> har mottatt et nytt terningkast.<br><br><strong style="color:aqua;>">'\
-                      + user_logged_in.username + '</strong> har lest boken og gitt den terningkast <strong style="color:aqua;">'+ dice +'</strong>, gratulerer.<br><br>' \
+        html_content = '<body>' \
+                       '<H2><strong style="color:grey;">Hei ' + author.username + '</H2><br><br>' \
+                      + book.title +'</strong> har mottatt terningkast.<br><br><strong style="color:grey;">'\
+                      + user_logged_in.username + '</strong> har lest boken og gitt den terningkast <strong style="color:green;">'+ dice +'</strong>, gratulerer.<br><br>' \
                        'Med vennlig hilsen<br><br>' \
-                       '<a style="color:yellow;" href="www.delMinBok.no">delMinBok</a></body>'
+                       '<a style="color:yellow;" href="www.delMinBok.no"><img style="height:75px;width:auto;" src="http://www.delminbok.no/static/stories/images/dmb_mail.png" /></a></body>'
         msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
         msg.attach_alternative(html_content, "text/html")
         msg.send()

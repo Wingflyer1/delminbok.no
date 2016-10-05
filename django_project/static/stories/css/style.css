@@ -1,6 +1,7 @@
 body{
     background: grey url("../images/background.jpg");
     padding-top: 70px;
+	margin-bottom:30px;
 }
 
 .navbar{
