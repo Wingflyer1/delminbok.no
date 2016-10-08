@@ -2,6 +2,19 @@ body{
     background: grey url("../images/background.jpg");
     padding-top: 70px;
 	margin-bottom:30px;
+	color:white;
+}
+
+.emailinput {
+    color:black;
+}
+
+.textinput {
+    color:black;
+}
+
+.textarea {
+    color:black;
 }
 
 .navbar{
