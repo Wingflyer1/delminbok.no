@@ -31,6 +31,7 @@
                 <!--<th></th>-->
                 <th>Tittel</th>
                 <th>Sjanger</th>
+                <th>Terningkast</th>
                 <!--<th>Favoritt</th>-->
                 {% for book in books %}
                 <tr>
@@ -38,6 +39,7 @@
                 <!--<label for="book{{ forloop.counter }}">-->
                 <td><a href="{% url 'stories:detail_book' book.id %}"> {{book.title}}</a></td>
                 <td>{{book.genre}}</td>
+                <td>{{book.dice_result}}</td>
                 <!--<td>-->
                 <!--{% if book.is_favorite %}-->
                     <!--<img src="http://www.free-icons-download.net/images/small-yellow-five-pointed-star-icon-22177.png" />-->

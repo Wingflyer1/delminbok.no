@@ -5,22 +5,17 @@ body{
 	color:white;
 }
 
-.emailinput {
-    color:black;
-}
-
-.textinput {
-    color:black;
-}
-
-.textarea {
+.emailinput, .textinput, .textarea, .panel {
     color:black;
 }
 
 
-.panel {
+#id_dice {
     color:black;
 }
+
+
+
 .navbar{
     border-radius:0;
 }
